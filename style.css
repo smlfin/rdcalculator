@@ -1,0 +1,126 @@
+body {
+    font-family: 'Segoe UI', Arial, sans-serif; /* Professional font stack */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f2f5; /* Soft light gray background */
+    margin: 0;
+    color: #333;
+    line-height: 1.6;
+}
+
+.calculator-container {
+    background-color: #ffffff; /* Clean white background for the calculator */
+    padding: 40px;
+    border-radius: 10px; /* Slightly softer corners */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); /* More pronounced, professional shadow */
+    text-align: center;
+    width: 480px; /* Adequate width for the table */
+    max-width: 90%; /* Responsive up to 90% of viewport width */
+    box-sizing: border-box;
+}
+
+h2 {
+    color: #2c3e50; /* Darker, more professional blue-gray */
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: 600;
+    border-bottom: 2px solid #e0e0e0; /* Subtle separator */
+    padding-bottom: 15px;
+}
+
+h3 {
+    color: #34495e; /* Slightly lighter than h2, but still strong */
+    margin-top: 35px;
+    margin-bottom: 20px;
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.input-group {
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 10px;
+    color: #555;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.input-group input[type="number"] {
+    width: 100%;
+    padding: 14px 18px; /* More generous padding */
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 17px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    -webkit-appearance: none; /* Removes default number input arrows in some browsers */
+    -moz-appearance: textfield; /* Removes default number input arrows in Firefox */
+}
+
+.input-group input[type="number"]:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+/* --- Table Styles for Professional Look --- */
+.maturity-table {
+    width: 100%;
+    border-collapse: collapse; /* Removes spacing between borders */
+    margin-top: 25px;
+    font-size: 16px;
+    background-color: #ffffff; /* Ensure table background is white */
+    border: 1px solid #e0e0e0; /* Overall table border */
+    border-radius: 8px; /* Rounded corners for the table itself */
+    overflow: hidden; /* Ensures rounded corners clip content */
+}
+
+.maturity-table th,
+.maturity-table td {
+    padding: 15px 18px; /* More padding for better readability */
+    text-align: left;
+    border-bottom: 1px solid #ebf0f5; /* Lighter border for rows */
+}
+
+.maturity-table th {
+    background-color: #eaf1f7; /* Light blue-gray for header */
+    color: #34495e;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+
+.maturity-table tbody tr:nth-child(even) {
+    background-color: #f8fbfc; /* Very light blue for even rows */
+}
+
+.maturity-table tbody tr:hover {
+    background-color: #e6f2ff; /* Gentle blue on hover */
+    cursor: default; /* Indicate non-interactive rows */
+}
+
+.maturity-table td:last-child {
+    font-weight: bold;
+    color: #28a745; /* Stronger green for maturity amount */
+    text-align: right; /* Align numbers to the right */
+    font-size: 17px;
+}
+
+/* Styling for the placeholder text before input */
+.placeholder-text {
+    color: #6c757d;
+    font-style: italic;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-left: 4px solid #007bff; /* Accent border */
+    border-radius: 4px;
+    font-size: 15px;
+}
