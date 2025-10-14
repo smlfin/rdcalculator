@@ -97,7 +97,7 @@ function calculateAndDisplayRequiredDeposit() {
     // --- 🌟 CUSTOM HEADING LOGIC 🌟 ---
     const formattedTarget = targetAmount.toLocaleString('en-IN');
     // Polished wording for the heading
-    goalFundHeading.textContent = `Goal of ₹ ${formattedTarget}: Monthly RD Contribution`;
+    goalFundHeading.textContent = `Goal of ₹ ${formattedTarget}: Monthly RD Contribution Needed`;
     
     const annualRatePercentage = 12.12;
     let tableHTML = `
