@@ -1,126 +1,290 @@
+/* --- Global & Layout Enhancements --- */
 body {
-    font-family: 'Segoe UI', Arial, sans-serif; /* Professional font stack */
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif; /* Modern, professional font */
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #f0f2f5; /* Soft light gray background */
+    background: linear-gradient(135deg, #e9ecef 0%, #f8f9fa 100%); /* Subtle light gray gradient */
     margin: 0;
-    color: #333;
+    color: #212529; /* Darker text for high contrast */
     line-height: 1.6;
 }
 
 .calculator-container {
-    background-color: #ffffff; /* Clean white background for the calculator */
-    padding: 40px;
-    border-radius: 10px; /* Slightly softer corners */
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); /* More pronounced, professional shadow */
+    background-color: #ffffff; /* Clean white background */
+    padding: 50px; /* Increased padding */
+    border-radius: 12px; /* Softer, modern corners */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Deep, professional shadow */
     text-align: center;
-    width: 480px; /* Adequate width for the table */
-    max-width: 90%; /* Responsive up to 90% of viewport width */
+    width: 500px; /* Slightly wider */
+    max-width: 90%;
     box-sizing: border-box;
+    transition: transform 0.3s ease-in-out;
 }
 
+/* --- Typography Enhancements --- */
 h2 {
-    color: #2c3e50; /* Darker, more professional blue-gray */
+    color: #495057; /* Muted primary color */
     margin-bottom: 30px;
-    font-size: 28px;
-    font-weight: 600;
-    border-bottom: 2px solid #e0e0e0; /* Subtle separator */
+    font-size: 30px;
+    font-weight: 700;
+    border-bottom: 3px solid #dee2e6; /* Thicker, defined separator */
     padding-bottom: 15px;
+    letter-spacing: 0.5px;
 }
 
 h3 {
-    color: #34495e; /* Slightly lighter than h2, but still strong */
-    margin-top: 35px;
-    margin-bottom: 20px;
-    font-size: 22px;
-    font-weight: 500;
+    color: #6c757d; /* Secondary muted color */
+    margin-top: 40px;
+    margin-bottom: 25px;
+    font-size: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
+/* --- Input & Label Enhancements --- */
 .input-group {
-    margin-bottom: 30px;
+    margin-bottom: 35px;
     text-align: left;
 }
 
+/* Highlighted Label Style (Goal-Oriented) */
 .input-group label {
     display: block;
-    margin-bottom: 10px;
-    color: #555;
+    margin-bottom: 12px;
     font-weight: bold;
     font-size: 16px;
+    
+    background-color: #f0f3f6; /* Very light subtle background */
+    padding: 12px 18px;
+    border-left: 6px solid #17a2b8; /* Strong Teal accent bar */
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #2c3e50; /* Dark, professional text */
 }
 
 .input-group input[type="number"] {
     width: 100%;
-    padding: 14px 18px; /* More generous padding */
+    padding: 16px 20px; /* More padding for large, touch-friendly field */
     border: 1px solid #ced4da;
-    border-radius: 6px;
-    font-size: 17px;
+    border-radius: 8px; /* Softer radius */
+    font-size: 18px;
     box-sizing: border-box;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    -webkit-appearance: none; /* Removes default number input arrows in some browsers */
-    -moz-appearance: textfield; /* Removes default number input arrows in Firefox */
+    -webkit-appearance: none; 
+    -moz-appearance: textfield; 
 }
 
 .input-group input[type="number"]:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    border-color: #17a2b8; /* Teal focus color */
+    box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.35);
     outline: none;
 }
 
-/* --- Table Styles for Professional Look --- */
+/* --- Table Styles (Enhanced Contrast) --- */
 .maturity-table {
     width: 100%;
-    border-collapse: collapse; /* Removes spacing between borders */
+    border-collapse: collapse;
     margin-top: 25px;
     font-size: 16px;
-    background-color: #ffffff; /* Ensure table background is white */
-    border: 1px solid #e0e0e0; /* Overall table border */
-    border-radius: 8px; /* Rounded corners for the table itself */
-    overflow: hidden; /* Ensures rounded corners clip content */
+    background-color: #f8f9fa; /* Light background for table */
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .maturity-table th,
 .maturity-table td {
-    padding: 15px 18px; /* More padding for better readability */
+    padding: 14px 18px;
     text-align: left;
-    border-bottom: 1px solid #ebf0f5; /* Lighter border for rows */
+    border-bottom: 1px solid #e9ecef; /* Very light row divider */
 }
 
 .maturity-table th {
-    background-color: #eaf1f7; /* Light blue-gray for header */
-    color: #34495e;
-    font-weight: 600;
+    background-color: #e3f2fd; /* Very light blue header */
+    color: #007bff; /* Primary blue for header text */
+    font-weight: 700;
     text-transform: uppercase;
     font-size: 14px;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
 }
 
 .maturity-table tbody tr:nth-child(even) {
-    background-color: #f8fbfc; /* Very light blue for even rows */
+    background-color: #fbfdff; /* Even lighter blue for zebra striping */
 }
 
 .maturity-table tbody tr:hover {
-    background-color: #e6f2ff; /* Gentle blue on hover */
-    cursor: default; /* Indicate non-interactive rows */
+    background-color: #e9f5ff; /* Gentle blue on hover */
+    cursor: default;
 }
 
 .maturity-table td:last-child {
     font-weight: bold;
-    color: #28a745; /* Stronger green for maturity amount */
-    text-align: right; /* Align numbers to the right */
-    font-size: 17px;
+    color: #28a745; /* Stronger green for results */
+    text-align: right;
+    font-size: 18px;
 }
 
-/* Styling for the placeholder text before input */
+/* --- Utilities --- */
 .placeholder-text {
+    /* Retained for fallback, but main ones are removed in HTML */
     color: #6c757d;
     font-style: italic;
     margin-top: 20px;
     padding: 15px;
     background-color: #f8f9fa;
-    border-left: 4px solid #007bff; /* Accent border */
+    border-left: 4px solid #17a2b8; /* Accent border matching focus */
     border-radius: 4px;
     font-size: 15px;
+}
+
+.separator {
+    border: 0;
+    height: 1px;
+    background: #ced4da; /* Subtle gray divider */
+    margin: 40px 0;
+}
+
+.clear-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px; /* Matches input radius */
+    font-size: 17px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 25px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.clear-button:hover {
+    background-color: #c82333;
+    box-shadow: 0 4px 10px rgba(220, 53, 69, 0.4);
+}
+
+/* --- 🌟 NEW MOBILE RESPONSIVENESS STYLES 🌟 --- */
+@media (max-width: 600px) {
+    .calculator-container {
+        padding: 20px; /* Reduce padding on small screens */
+        box-shadow: none; /* Less aggressive shadow on mobile */
+        border-radius: 0;
+        max-width: 100%;
+        width: 100%;
+    }
+
+    h2 {
+        font-size: 26px;
+        margin-bottom: 20px;
+    }
+
+    h3 {
+        font-size: 18px;
+        margin-top: 30px;
+        margin-bottom: 15px;
+    }
+    
+    .input-group input[type="number"], .clear-button {
+        padding: 12px 15px; /* Slightly reduced size for better fit */
+        font-size: 16px;
+    }
+
+    .maturity-table th, .maturity-table td {
+        padding: 10px 12px; /* Smaller table padding */
+        font-size: 15px;
+    }
+
+    /* Adjust table result column for readability */
+    .maturity-table td:last-child {
+        font-size: 16px;
+    }
+}
+/* ... [Previous CSS (body, .calculator-container, h2) remains largely the same] ... */
+
+/* --- Layout for Two-Column Display --- */
+.calculator-container {
+    /* ... (Existing styles for container) ... */
+    width: 900px; /* Increased width to accommodate both columns */
+    max-width: 95%;
+}
+
+.calculation-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr; /* Two flexible columns with a fixed-width separator */
+    gap: 30px;
+    align-items: start; /* Align sections to the top */
+    margin-top: 30px;
+}
+
+.calc-section {
+    padding: 0;
+}
+
+.vertical-separator {
+    width: 1px;
+    height: 100%; /* Spans the full height of the grid */
+    background: #ced4da; /* Subtle gray divider */
+    margin: 10px 0;
+}
+
+/* --- Typography Enhancements (Adjusted for side-by-side) --- */
+h3 {
+    /* ... (Existing styles for h3) ... */
+    margin-top: 0; /* Remove top margin when placed in the grid structure */
+}
+
+/* ... [Input & Label Enhancements, Table Styles, etc. remain the same] ... */
+
+
+/* New style for Clear button */
+.clear-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 17px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 40px; /* Added top margin to separate from the grid */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* ... [Clear button hover/focus styles remain the same] ... */
+
+/* --- 🌟 MOBILE RESPONSIVENESS STYLES 🌟 --- */
+@media (max-width: 950px) {
+    /* Switch back to a single column layout */
+    .calculation-grid {
+        grid-template-columns: 1fr;
+        gap: 0; /* Remove gap in stacked view */
+    }
+
+    /* Restore the horizontal separator used in the stacked layout */
+    .calc-section:first-child {
+        border-bottom: 1px solid #ced4da;
+        padding-bottom: 30px;
+        margin-bottom: 30px;
+    }
+    
+    /* Hide the vertical separator */
+    .vertical-separator {
+        display: none;
+    }
+
+    h3 {
+        margin-top: 30px; /* Restore some top margin when stacked */
+    }
+}
+
+@media (max-width: 600px) {
+    /* ... [Existing mobile styles for padding, font sizes, etc. remain the same] ... */
+    .calculator-container {
+        width: 100%;
+    }
 }
