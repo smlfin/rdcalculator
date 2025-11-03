@@ -1,6 +1,6 @@
 // Function to calculate the core formula component (part of the maturity formula)
 // This implements the user's requested formula: ( (1+r)^n - 1 ) / ( 1 - (1+r)^-1 )
-// Where r = Int. Per / 100 * 12 (effective monthly rate) and n = No. of Installments (Months)
+// Where r = Int. Per / 100 / 12 (effective monthly rate) and n = No. of Installments (Months)
 function calculateSimpleAnnuityFormula(years, annualRatePercentage) {
     // Int. Per / 100 / 12 (Monthly Rate)
     // The user's formula implies the exponent 'n' is the number of installments (months).
@@ -57,8 +57,6 @@ function calculateAndDisplayMaturity() {
         return;
     }
 
-    // Using the original rate of 10% for this calculation, but now with the new formula
-    const annualRatePercentage = 10;
     let tableHTML = `
         <table class="maturity-table">
             <thead>
@@ -71,6 +69,10 @@ function calculateAndDisplayMaturity() {
     `;
 
     for (let years = 1; years <= 5; years++) {
+        // *** TIERED RATE LOGIC IMPLEMENTED HERE ***
+        // 10% for < 3 years, 12% for >= 3 years
+        const annualRatePercentage = years < 3 ? 10 : 12;
+
         // *** CHANGE: Using the user's requested formula implementation ***
         const formulaValue = calculateSimpleAnnuityFormula(years, annualRatePercentage);
         const maturityAmount = principalAmount * formulaValue;
@@ -121,8 +123,6 @@ function calculateAndDisplayRequiredDeposit() {
     // Polished wording for the heading
     goalFundHeading.textContent = `Goal of ₹ ${formattedTarget}: Monthly RD Contribution`;
     
-    // Using the original rate of 10% for this calculation, but now with the new formula
-    const annualRatePercentage = 10;
     let tableHTML = `
         <table class="maturity-table">
             <thead>
@@ -135,6 +135,10 @@ function calculateAndDisplayRequiredDeposit() {
     `;
     
     for (let years = 1; years <= 5; years++) {
+        // *** TIERED RATE LOGIC IMPLEMENTED HERE ***
+        // 10% for < 3 years, 12% for >= 3 years
+        const annualRatePercentage = years < 3 ? 10 : 12;
+
         // *** CHANGE: Using the user's requested formula implementation ***
         const formulaValue = calculateSimpleAnnuityFormula(years, annualRatePercentage);
 
