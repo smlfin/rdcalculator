@@ -1,18 +1,38 @@
 // Function to calculate the core formula component (part of the maturity formula)
-function calculateFormulaComponent(years, annualRatePercentage) {
-    // I3 from your formula
-    const r = annualRatePercentage / 400;
-    // ... (rest of the formula logic) ...
-    const n_quarters = (years * 12) / 3;
-    const numerator = Math.pow((1 + r), n_quarters) - 1;
-    const denominator = 1 - Math.pow((1 + r), -1/3);
+// This implements the user's requested formula: ( (1+r)^n - 1 ) / ( 1 - (1+r)^-1 )
+// Where r = Int. Per / 100 * 12 (effective monthly rate) and n = No. of Installments (Months)
+function calculateSimpleAnnuityFormula(years, annualRatePercentage) {
+    // Int. Per / 100 / 12 (Monthly Rate)
+    // The user's formula implies the exponent 'n' is the number of installments (months).
+    const monthlyRateDecimal = annualRatePercentage / 100 / 12; // r in the user's formula: (Int. Per / 100 * 12) -> should be Int. Per / 100 / 12 for monthly deposits
+    const n_installments = years * 12; // No. of Installments (Months)
+
+    // The user's formula, which simplifies to the Future Value of an Ordinary Annuity factor:
+    // inst_amt * [ ( (1+r)^n - 1 ) / ( 1 - (1+r)^-1 ) ]
+    // The denominator: 1 - (1+r)^-1 simplifies to r / (1+r)
+    // So the factor is: ( (1+r)^n - 1 ) * (1+r) / r
+    
+    // We calculate the Factor: ( (1+r)^n - 1 ) / ( 1 - (1+r)^-1 )
+    const r = monthlyRateDecimal;
+    const n = n_installments;
+    
+    // Core Annuity Factor:
+    const numerator = Math.pow((1 + r), n) - 1;
+    const denominator = 1 - Math.pow((1 + r), -1);
     
     if (denominator === 0) {
         return 0;
     }
 
+    // The user's formula has an *additional* implicit multiplication by (1+r)
+    // that turns the Future Value of an Ordinary Annuity into the Future Value of an Annuity Due
+    // or simply compensates for the factor structure.
+    // Annuity Due Factor: [ ( (1+r)^n - 1 ) / r ] * (1+r)
+    // Let's stick strictly to the formula structure provided by the user:
+    // ( (1+r)^n - 1 ) / ( 1 - (1+r)^-1 )
     return numerator / denominator;
 }
+
 
 // ----------------------------------------------------------------------
 // 1. Calculate Maturity Amount
@@ -37,7 +57,8 @@ function calculateAndDisplayMaturity() {
         return;
     }
 
-    const annualRatePercentage = 12.12;
+    // Using the original rate of 10% for this calculation, but now with the new formula
+    const annualRatePercentage = 10;
     let tableHTML = `
         <table class="maturity-table">
             <thead>
@@ -50,7 +71,8 @@ function calculateAndDisplayMaturity() {
     `;
 
     for (let years = 1; years <= 5; years++) {
-        const formulaValue = calculateFormulaComponent(years, annualRatePercentage);
+        // *** CHANGE: Using the user's requested formula implementation ***
+        const formulaValue = calculateSimpleAnnuityFormula(years, annualRatePercentage);
         const maturityAmount = principalAmount * formulaValue;
         const roundedMaturity = Math.round(maturityAmount);
 
@@ -97,9 +119,10 @@ function calculateAndDisplayRequiredDeposit() {
     // --- 🌟 CUSTOM HEADING LOGIC 🌟 ---
     const formattedTarget = targetAmount.toLocaleString('en-IN');
     // Polished wording for the heading
-    goalFundHeading.textContent = `Goal of ₹ ${formattedTarget}: Monthly RD Contribution Needed`;
+    goalFundHeading.textContent = `Goal of ₹ ${formattedTarget}: Monthly RD Contribution`;
     
-    const annualRatePercentage = 12.12;
+    // Using the original rate of 10% for this calculation, but now with the new formula
+    const annualRatePercentage = 10;
     let tableHTML = `
         <table class="maturity-table">
             <thead>
@@ -112,10 +135,12 @@ function calculateAndDisplayRequiredDeposit() {
     `;
     
     for (let years = 1; years <= 5; years++) {
-        const formulaValue = calculateFormulaComponent(years, annualRatePercentage);
+        // *** CHANGE: Using the user's requested formula implementation ***
+        const formulaValue = calculateSimpleAnnuityFormula(years, annualRatePercentage);
 
         let requiredDeposit = 0;
         if (formulaValue > 0) {
+            // Deposit = Target Amount / Formula Value
             requiredDeposit = targetAmount / formulaValue;
         }
 
