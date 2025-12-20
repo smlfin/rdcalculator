@@ -71,7 +71,7 @@ function calculateAndDisplayMaturity() {
     for (let years = 1; years <= 5; years++) {
         // *** TIERED RATE LOGIC IMPLEMENTED HERE ***
         // 10% for < 3 years, 12% for >= 3 years
-        const annualRatePercentage = years < 3 ? 10 : 12;
+        const annualRatePercentage = years < 3 ? 10 : 11.50;
 
         // *** CHANGE: Using the user's requested formula implementation ***
         const formulaValue = calculateSimpleAnnuityFormula(years, annualRatePercentage);
@@ -137,7 +137,7 @@ function calculateAndDisplayRequiredDeposit() {
     for (let years = 1; years <= 5; years++) {
         // *** TIERED RATE LOGIC IMPLEMENTED HERE ***
         // 10% for < 3 years, 12% for >= 3 years
-        const annualRatePercentage = years < 3 ? 10 : 12;
+        const annualRatePercentage = years < 3 ? 10 : 11.50;
 
         // *** CHANGE: Using the user's requested formula implementation ***
         const formulaValue = calculateSimpleAnnuityFormula(years, annualRatePercentage);
