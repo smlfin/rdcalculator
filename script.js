@@ -31,7 +31,7 @@ function calculateAndDisplayMaturity() {
     document.getElementById('goalFundHeading').textContent = 'Required Monthly Deposit (1 to 5 Years)';
     
     document.getElementById('clearButton').style.display = principalAmount >= 1000 ? 'block' : 'none';
-    document.getElementById('downloadButton').style.display = principalAmount >= 1000 ? 'flex' : 'none';
+    document.getElementById('actionButtonsRow').style.display = principalAmount >= 1000 ? 'flex' : 'none';
 
     if (isNaN(principalAmount) || principalAmount < 1000) {
         resultsContainer.innerHTML = '';
@@ -92,7 +92,7 @@ function calculateAndDisplayRequiredDeposit() {
     document.getElementById('maturityResultsTableContainer').innerHTML = '';
 
     document.getElementById('clearButton').style.display = targetAmount >= 1000 ? 'block' : 'none';
-    document.getElementById('downloadButton').style.display = targetAmount >= 1000 ? 'flex' : 'none';
+    document.getElementById('actionButtonsRow').style.display = targetAmount >= 1000 ? 'flex' : 'none';
 
     if (isNaN(targetAmount) || targetAmount < 1000) {
         resultsContainer.innerHTML = '';
@@ -158,7 +158,7 @@ function clearResults() {
     document.getElementById('depositResultsTableContainer').innerHTML = '';
     document.getElementById('goalFundHeading').textContent = 'Required Monthly Deposit (1 to 5 Years)';
     document.getElementById('clearButton').style.display = 'none';
-    document.getElementById('downloadButton').style.display = 'none';
+    document.getElementById('actionButtonsRow').style.display = 'none';
 }
 
 
@@ -167,6 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('targetAmount').addEventListener('input', calculateAndDisplayRequiredDeposit);
     document.getElementById('clearButton').addEventListener('click', clearResults);
     document.getElementById('downloadButton').addEventListener('click', downloadPresentation);
+    document.getElementById('whatsappShareButton').addEventListener('click', shareToWhatsApp);
     
     clearResults(); 
 });
@@ -214,7 +215,11 @@ function drawRoundRect(ctx, x, y, w, h, r) {
     ctx.closePath();
 }
 
-async function downloadPresentation() {
+// Builds the presentation canvas from current input values.
+// Returns { canvas, filename } or null if there's nothing valid to render.
+// Both the Download and Share-to-WhatsApp actions use this same function,
+// so the image is always identical either way.
+async function buildPresentationCanvas() {
     const monthlyDepositInput = document.getElementById('monthlyDeposit');
     const targetAmountInput = document.getElementById('targetAmount');
 
@@ -244,7 +249,7 @@ async function downloadPresentation() {
             value: Math.ceil(targetAmount / r.formulaValue)
         }));
     } else {
-        return; // nothing valid to render
+        return null; // nothing valid to render
     }
 
     const logo = await getBrandLogo();
@@ -256,6 +261,7 @@ async function downloadPresentation() {
     canvas.height = H * scale;
     const ctx = canvas.getContext('2d');
     ctx.scale(scale, scale);
+
 
     // Background
     const bgGrad = ctx.createLinearGradient(0, 0, 0, H);
@@ -435,9 +441,20 @@ async function downloadPresentation() {
     ctx.textAlign = 'center';
     ctx.fillText('Visit your nearest branch to start this RD today!', W / 2, footerY + 52);
 
-    // Trigger download
+    // Filename + return (download/share is handled by the caller)
     const filenameAmount = mode === 'maturity' ? Math.round(principalAmount) : Math.round(targetAmount);
     const filename = 'RD_Plan_' + filenameAmount + '.png';
+
+    return { canvas, filename };
+}
+
+// ----------------------------------------------------------------------
+// 5. Download the presentation as a PNG file
+// ----------------------------------------------------------------------
+async function downloadPresentation() {
+    const result = await buildPresentationCanvas();
+    if (!result) return;
+    const { canvas, filename } = result;
 
     canvas.toBlob(function (blob) {
         const link = document.createElement('a');
@@ -446,5 +463,44 @@ async function downloadPresentation() {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+        setTimeout(() => URL.revokeObjectURL(link.href), 3000);
+    }, 'image/png');
+}
+
+// ----------------------------------------------------------------------
+// 6. Share the presentation straight to WhatsApp (or fall back to download)
+// ----------------------------------------------------------------------
+async function shareToWhatsApp() {
+    const result = await buildPresentationCanvas();
+    if (!result) return;
+    const { canvas, filename } = result;
+
+    canvas.toBlob(async function (blob) {
+        if (!blob) return;
+        const file = new File([blob], filename, { type: 'image/png' });
+
+        // Native share sheet (Android/iOS browsers) — WhatsApp appears as a direct target.
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            try {
+                await navigator.share({
+                    files: [file],
+                    title: 'Sangeeth Nidhi Limited',
+                    text: 'Recurring Deposit plan — Sangeeth Nidhi Limited'
+                });
+            } catch (err) {
+                // person cancelled the share sheet — nothing to do
+            }
+            return;
+        }
+
+        // Fallback for desktop / unsupported browsers: download, then guide the person.
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        setTimeout(() => URL.revokeObjectURL(link.href), 3000);
+        alert('Direct sharing isn\'t available on this browser. The image has been downloaded — open WhatsApp (or WhatsApp Web) and attach it from your downloads.');
     }, 'image/png');
 }
